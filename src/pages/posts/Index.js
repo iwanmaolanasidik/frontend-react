@@ -25,6 +25,15 @@ function IndexPost(){
         //masukan data ke state "posts"
         setPosts(data);
     }
+
+    //function deleteData
+    const deletePost = async (id) => {
+        //sending
+        await axios.delete(`http://localhost:3000/api/posts/delete/${id}`);
+
+        //panggil function fetchData
+        fectData();
+    }
     return(
         <Container className='mt-3'>
             <Row>
@@ -47,7 +56,10 @@ function IndexPost(){
                                             <td>{index + 1}</td>
                                             <td>{post.title}</td>
                                             <td>{post.content}</td>
-                                            <td className="text-center"></td>
+                                            <td className="text-center">
+                                                <Button as={Link} to={`/post/edit/${post.id}`} variant="primary" size="sm" className="me-2">EDIT</Button>
+                                                <Button onClick={()=>deletePost(post.id)} variant="danger" size="sm">DELETE</Button>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
